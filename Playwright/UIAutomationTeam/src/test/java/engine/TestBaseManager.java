@@ -39,12 +39,6 @@ public class TestBaseManager {
 	 */
 	@RegisterExtension
 	TestStatusWatcher watcher = new TestStatusWatcher(() -> videoPath, () -> screenshot);
-	
-	@BeforeAll
-	public static void setupAllureFiles() {
-		AllureEnvironmentManager.writeEnvironmentFile();
-		AllureEnvironmentManager.copyCategoriesFile();
-	}
 
 	@AfterEach
 	public void cleanPageAndContext() {

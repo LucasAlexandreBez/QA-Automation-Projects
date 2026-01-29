@@ -7,7 +7,9 @@ import org.junit.jupiter.api.BeforeEach;
 
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Browser.NewContextOptions;
+import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.HarMode;
+import com.microsoft.playwright.options.WaitUntilState;
 
 import config.GlobalTestRunConfig;
 import config.PropertiesConfigLoader;
@@ -45,6 +47,10 @@ public class DemoQATestBase extends TestBaseManager {
         Browser browser = PlaywrightThreadManager.getBrowserThreadIntance();
         context = browser.newContext(options);
         page = context.newPage();
-        page.navigate(PropertiesConfigLoader.getPropertyValue("app.demoqa.url"));
+        page.navigate(
+        	    PropertiesConfigLoader.getPropertyValue("app.demoqa.url"),
+        	    new Page.NavigateOptions()
+        	        .setWaitUntil(WaitUntilState.DOMCONTENTLOADED)
+        	);
     }
 }

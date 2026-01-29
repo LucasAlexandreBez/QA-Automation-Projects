@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.Properties;
 
 import config.GlobalTestRunConfig;
@@ -31,23 +32,23 @@ public final class AllureEnvironmentManager {
      * to the Allure results directory.
      * @throws RuntimeException if the file cannot be found or copied
      */
-    public static void copyCategoriesFile() {
+    public static synchronized void copyCategoriesFile() {
         try {
             Files.createDirectories(ALLURE_RESULTS);
 
             try (InputStream is = AllureEnvironmentManager.class
                     .getClassLoader()
                     .getResourceAsStream("categories.json")) {
-
                 if (is == null) {
                     throw new RuntimeException("categories.json not found in test resources");
                 }
-
-                Files.copy(
-                        is,
-                        ALLURE_RESULTS.resolve("categories.json"),
-                        java.nio.file.StandardCopyOption.REPLACE_EXISTING
-                );
+                if (!Files.exists(ALLURE_RESULTS.resolve("categories.json"))) {
+                    Files.copy(
+                            is,
+                            ALLURE_RESULTS.resolve("categories.json"),
+                            StandardCopyOption.REPLACE_EXISTING
+                    );
+                }
             }
 
         } catch (IOException e) {
@@ -59,7 +60,7 @@ public final class AllureEnvironmentManager {
      * Generates the {@code environment.properties} file used by Allure Report.
      * @throws RuntimeException if the file cannot be written
      */
-    public static void writeEnvironmentFile() {
+    public static synchronized void writeEnvironmentFile() {
         try {
             Files.createDirectories(ALLURE_RESULTS);
 

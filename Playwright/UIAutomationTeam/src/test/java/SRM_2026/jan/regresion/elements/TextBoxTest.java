@@ -2,56 +2,57 @@ package SRM_2026.jan.regresion.elements;
 
 import java.util.List;
 
+
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.*;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import apps.demoQA.DemoQATestBase;
-import apps.demoQA.page.DemoQaMenuPage;
-import apps.demoQA.page.TextBoxPage;
-
 import io.qameta.allure.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import apps.demoQA.DemoQATestBase;
+import apps.demoQA.pages.DemoQaMenuPage;
+import apps.demoQA.pages.elements.TextBoxPage;
 
-@Epic("Regression - 01/2025")
+@Epic("Regression - 2026")
 @Feature("Element flows")
-@ParameterizedClass
-@CsvSource({ 
-	"Test 1, Test1@email.com, Test Current Adress 1, Test Permanent Adress 1",
-	"Test 2,Test2@email.com, Test Current Adress 2, Test Permanent Adress 2",
-	"Test 3, Test3@email.com, Test Current Adress 3, Test Permanent Adress 3" 
-})
 public class TextBoxTest extends DemoQATestBase {
-
-	@Parameter(0)
-	private String fullname;
-	@Parameter(1)
-	private String email;
-	@Parameter(2)
-	private String currentAddress;
-	@Parameter(3)
-	private String permanentAddress;
-
+	
 	DemoQaMenuPage menuPage = new DemoQaMenuPage();
 	TextBoxPage textBoxPage = new TextBoxPage();
 
 	/**
-	 * Fill and submit multiple values and fails if any text on the output don't
-	 * match
+	 * Given a user access TextBox page
+	 * <br>
+	 * And user fulfill the input full name with valid name
+	 * <br>
+	 * And user fulfill the input email with valid email
+	 * <br>
+	 * And user fulfill the input current address with valid address
+	 * <br>
+	 * And user fulfill the input permanent address with valid address
+	 * <br>
+	 * When user click on submit button
+	 * <br>
+	 * Then system submit form with values provided by the user on the inputs full name, email, current address and permanent address successfully
+	 * <br>
+	 * And system present below the form the values provided by the user on the inputs full name, email, current address and permanent address 
 	 */
 	@Story("Text Box flow")
 	@DisplayName("Fullfill the text box form and submit with success")
-	@Description
 	@Severity(SeverityLevel.NORMAL)
 	@Tag("Regression")
 	@Tag("Elements")
 	@Owner("Lucas Alexandre")
-	@Test
-	public void fillTheTextBoxFormAndSubmitWithSuccess() {
-		Allure.getLifecycle().updateTestCase(testCase -> testCase.setName(
-				String.format("Fullfill the text box form and submit with success - %s", fullname)
-		));
+	@Description(useJavaDoc = true)
+	@ParameterizedTest(name = "Submit TextBox form - {index}")
+	@CsvSource({
+	    "Test 1, Test1@email.com, Test Current Adress 1, Test Permanent Adress 1",
+	    "Test 2, Test2@email.com, Test Current Adress 2, Test Permanent Adress 2",
+	    "Test 3, Test3@email.com, Test Current Adress 3, Test Permanent Adress 3"
+	})
+	public void fillTheTextBoxFormAndSubmitWithSuccess(String fullname, String email, String currentAddress, String permanentAddress) {
 		menuPage.accessTextBoxPage(page);
 		textBoxPage.fillAllInputsInTheFormInput(page, fullname, email, currentAddress, permanentAddress);
 		List<String> outputValues = textBoxPage.getOutputValues(page);

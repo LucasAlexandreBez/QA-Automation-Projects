@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import apps.demoQA.DemoQATestBase;
-import apps.demoQA.enums.CheckboxTreeItems;
-import apps.demoQA.page.CheckBoxPage;
-import apps.demoQA.page.DemoQaMenuPage;
+import apps.demoQA.enums.CheckboxPageTreeItems;
+import apps.demoQA.pages.DemoQaMenuPage;
+import apps.demoQA.pages.elements.CheckBoxPage;
 import io.qameta.allure.*;
 
-@Epic("Regression - 01/2025")
+@Epic("Regression - 2026")
 @Feature("Element flows")
 public class CheckBoxTest extends DemoQATestBase {
 
@@ -21,8 +21,8 @@ public class CheckBoxTest extends DemoQATestBase {
 	CheckBoxPage checkBoxPage = new CheckBoxPage();
 
 	/**
-	 * Given a user access the Checkbox page
-	 * When user Check the Home Folder option 
+	 * Given a user access the Checkbox page <br>
+	 * When user Check the Home Folder option <br>
 	 * Then result area should present all folders and files text values
 	 */
 	@Story("Check Box flow")
@@ -30,40 +30,25 @@ public class CheckBoxTest extends DemoQATestBase {
 	@Severity(SeverityLevel.NORMAL)
 	@Tag("Regression")
 	@Tag("Elements")
-	@DisplayName("Select the Home Folder Checkbox successfully")
-	@Description
+	@DisplayName("Verify If user check Root Home folder then all Subfolders and fIles will be checked automatically")
+	@Description(useJavaDoc = true)
 	@Test
-	public void selectHomeFolderWithSuccess() {
+	public void checkHomeFolderSuccessfully() {
 		menuPage.accessCheckBoxPage(page);
 		checkBoxPage.expandAllFolders(page);
-		checkBoxPage.checkByLabel(page, CheckboxTreeItems.HOME);
+		checkBoxPage.checkByLabel(page, CheckboxPageTreeItems.HOME);
 		List<String> results = checkBoxPage.getSelectedFoldersAndFiles(page);
-		Allure.step("Validate if selected folders names will be presented on result area", () -> {
-			assertAll("results", 
-					() -> assertTrue(results.contains(CheckboxTreeItems.HOME.getLabel().toLowerCase())),
-					() -> assertTrue(results.contains(CheckboxTreeItems.DESKTOP.getLabel().toLowerCase())),
-					() -> assertTrue(results.contains(CheckboxTreeItems.NOTES.getLabel().toLowerCase())),
-					() -> assertTrue(results.contains(CheckboxTreeItems.COMMANDS.getLabel().toLowerCase())),
-					() -> assertTrue(results.contains(CheckboxTreeItems.DOCUMENTS.getLabel().toLowerCase())),
-					() -> assertTrue(results.contains(CheckboxTreeItems.WORKSPACE.getLabel().toLowerCase())),
-					() -> assertTrue(results.contains(CheckboxTreeItems.REACT.getLabel().toLowerCase())),
-					() -> assertTrue(results.contains(CheckboxTreeItems.ANGULAR.getLabel().toLowerCase())),
-					() -> assertTrue(results.contains(CheckboxTreeItems.VEU.getLabel().toLowerCase())),
-					() -> assertTrue(results.contains(CheckboxTreeItems.OFFICE.getLabel().toLowerCase())),
-					() -> assertTrue(results.contains(CheckboxTreeItems.PUBLIC.getLabel().toLowerCase())),
-					() -> assertTrue(results.contains(CheckboxTreeItems.PRIVATE.getLabel().toLowerCase())),
-					() -> assertTrue(results.contains(CheckboxTreeItems.CLASSIFIED.getLabel().toLowerCase())),
-					() -> assertTrue(results.contains(CheckboxTreeItems.GENERAL.getLabel().toLowerCase())),
-					() -> assertTrue(results.contains(CheckboxTreeItems.DOWNLOADS.getLabel().toLowerCase())),
-					() -> assertTrue(results.contains(CheckboxTreeItems.WORD.getLabel().toLowerCase())),
-					() -> assertTrue(results.contains(CheckboxTreeItems.EXCEL.getLabel().toLowerCase()))
-			);
+		assertAll("results", () -> {
+			for (CheckboxPageTreeItems item : CheckboxPageTreeItems.values()) {
+				assertTrue(checkBoxPage.isCheckBoxChecked(page, item));
+				assertTrue(results.contains(item.getLabel()));
+			}
 		});
 	}
-	
+
 	/**
-	 * Given a user access the Checkbox page
-	 * When user Check the Desktop Folder option 
+	 * Given a user access the Checkbox page <br>
+	 * When user Check the Desktop Folder option <br>
 	 * Then result area should present only Desktop, Notes and Commands text values
 	 */
 	@Story("Check Box flow")
@@ -71,84 +56,66 @@ public class CheckBoxTest extends DemoQATestBase {
 	@Severity(SeverityLevel.NORMAL)
 	@Tag("Regression")
 	@Tag("Elements")
-	@DisplayName("Select the Desktop Folder Checkbox successfully")
-	@Description
+	@DisplayName("Verify If User Check Desktop Folder Then All Subfolders And FIles Will Be Checked Automatically")
+	@Description(useJavaDoc = true)
 	@Test
-	public void selectDesktopFolderWithSuccess() {
+	public void checkDesktopFolderSuccessfully() {
 		menuPage.accessCheckBoxPage(page);
 		checkBoxPage.expandAllFolders(page);
-		checkBoxPage.checkByLabel(page, CheckboxTreeItems.HOME);
+		checkBoxPage.checkByLabel(page, CheckboxPageTreeItems.DESKTOP);
 		List<String> results = checkBoxPage.getSelectedFoldersAndFiles(page);
-		Allure.step("Validate if selected folders names will be presented on result area", () -> {
-			assertAll("results", 
-					() -> assertTrue(results.contains(CheckboxTreeItems.DESKTOP.getLabel().toLowerCase())),
-					() -> assertTrue(results.contains(CheckboxTreeItems.NOTES.getLabel().toLowerCase())),
-					() -> assertTrue(results.contains(CheckboxTreeItems.COMMANDS.getLabel().toLowerCase())),
-					
-					() -> assertFalse(results.contains(CheckboxTreeItems.HOME.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.DOCUMENTS.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.WORKSPACE.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.REACT.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.ANGULAR.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.VEU.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.OFFICE.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.PUBLIC.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.PRIVATE.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.CLASSIFIED.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.GENERAL.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.DOWNLOADS.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.WORD.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.EXCEL.getLabel().toLowerCase()))
-			);
+		assertAll("results", () -> {
+			for (CheckboxPageTreeItems item : CheckboxPageTreeItems.values()) {
+				if (item.equals(CheckboxPageTreeItems.DESKTOP) || item.equals(CheckboxPageTreeItems.NOTES)
+						|| item.equals(CheckboxPageTreeItems.COMMANDS)) {
+					assertTrue(checkBoxPage.isCheckBoxChecked(page, item));
+					assertTrue(results.contains(item.getLabel()));
+				} else {
+					assertFalse(checkBoxPage.isCheckBoxChecked(page, item));
+					assertFalse(results.contains(item.getLabel()));
+				}
+			}
 		});
 	}
-	
+
 	/**
-	 * Given a user access the Checkbox page
-	 * When user Check the Documents Folder option 
-	 * And user uncheck Office Folder option
-	 * Then result area should present only Workspace, React, Angular and Veu text values
+	 * Given a user access the Checkbox page <br>
+	 * When user Check the Documents Folder option <br>
+	 * And user uncheck Office Folder option <br>
+	 * Then result area should present only Workspace, React, Angular and Veu text
+	 * values
 	 */
 	@Story("Check Box flow")
 	@Owner("Lucas Alexandre")
 	@Severity(SeverityLevel.NORMAL)
 	@Tag("Regression")
 	@Tag("Elements")
-	@DisplayName("Select the Desktop Folder Checkbox successfully")
-	@Description
+	@DisplayName("Verify If user check Documents folder and uncheck Office folder then only subfolders and files inside Documens will be checked automatically")
+	@Description(useJavaDoc = true)
 	@Test
 	public void checkDocumentsAndUncheckOfficeFolderWithSuccess() {
 		menuPage.accessCheckBoxPage(page);
 		checkBoxPage.expandAllFolders(page);
-		checkBoxPage.checkByLabel(page, CheckboxTreeItems.HOME);
+		checkBoxPage.checkByLabel(page, CheckboxPageTreeItems.DOCUMENTS);
+		checkBoxPage.uncheckByLabel(page, CheckboxPageTreeItems.OFFICE);
 		List<String> results = checkBoxPage.getSelectedFoldersAndFiles(page);
-		Allure.step("Validate if selected folders names will be presented on result area", () -> {
-			assertAll("results", 
-					() -> assertTrue(results.contains(CheckboxTreeItems.WORKSPACE.getLabel().toLowerCase())),
-					() -> assertTrue(results.contains(CheckboxTreeItems.REACT.getLabel().toLowerCase())),
-					() -> assertTrue(results.contains(CheckboxTreeItems.ANGULAR.getLabel().toLowerCase())),
-					() -> assertTrue(results.contains(CheckboxTreeItems.VEU.getLabel().toLowerCase())),
-					
-					() -> assertFalse(results.contains(CheckboxTreeItems.HOME.getLabel().toLowerCase().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.DESKTOP.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.NOTES.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.COMMANDS.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.DOCUMENTS.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.OFFICE.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.PUBLIC.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.PRIVATE.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.CLASSIFIED.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.GENERAL.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.DOWNLOADS.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.WORD.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.EXCEL.getLabel().toLowerCase()))
-			);
+		assertAll("results", () -> {
+			for (CheckboxPageTreeItems item : CheckboxPageTreeItems.values()) {
+				if (item.equals(CheckboxPageTreeItems.WORKSPACE) || item.equals(CheckboxPageTreeItems.REACT)
+						|| item.equals(CheckboxPageTreeItems.ANGULAR) || item.equals(CheckboxPageTreeItems.VEU)) {
+					assertTrue(checkBoxPage.isCheckBoxChecked(page, item));
+					assertTrue(results.contains(item.getLabel()));
+				} else {
+					assertTrue(checkBoxPage.isCheckBoxChecked(page, item));
+					assertFalse(results.contains(item.getLabel()));
+				}
+			}
 		});
 	}
-	
+
 	/**
-	 * Given a user access the Checkbox page
-	 * When user Check the Word File.doc option 
+	 * Given a user access the Checkbox page <br>
+	 * When user Check the Word File.doc option <br>
 	 * Then result area should present only Word File.doc text values
 	 */
 	@Story("Check Box flow")
@@ -156,35 +123,24 @@ public class CheckBoxTest extends DemoQATestBase {
 	@Severity(SeverityLevel.NORMAL)
 	@Tag("Regression")
 	@Tag("Elements")
-	@DisplayName("Select the Desktop Folder Checkbox successfully")
-	@Description
+	@DisplayName("Verify If user Check Word File.doc then only the Word File.doc would be checked")
+	@Description(useJavaDoc = true)
 	@Test
 	public void checkWordFileDocWithSuccess() {
 		menuPage.accessCheckBoxPage(page);
 		checkBoxPage.expandAllFolders(page);
-		checkBoxPage.checkByLabel(page, CheckboxTreeItems.HOME);
+		checkBoxPage.checkByLabel(page, CheckboxPageTreeItems.WORD);
 		List<String> results = checkBoxPage.getSelectedFoldersAndFiles(page);
-		Allure.step("Validate if selected folders names will be presented on result area", () -> {
-			assertAll("results", 
-					() -> assertTrue(results.contains(CheckboxTreeItems.WORKSPACE.getLabel().toLowerCase())),
-					() -> assertTrue(results.contains(CheckboxTreeItems.REACT.getLabel().toLowerCase())),
-					() -> assertTrue(results.contains(CheckboxTreeItems.ANGULAR.getLabel().toLowerCase())),
-					() -> assertTrue(results.contains(CheckboxTreeItems.VEU.getLabel().toLowerCase())),
-					
-					() -> assertFalse(results.contains(CheckboxTreeItems.HOME.getLabel().toLowerCase().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.DESKTOP.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.NOTES.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.COMMANDS.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.DOCUMENTS.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.OFFICE.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.PUBLIC.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.PRIVATE.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.CLASSIFIED.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.GENERAL.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.DOWNLOADS.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.WORD.getLabel().toLowerCase())),
-					() -> assertFalse(results.contains(CheckboxTreeItems.EXCEL.getLabel().toLowerCase()))
-			);
+		assertAll("results", () -> {
+			for (CheckboxPageTreeItems item : CheckboxPageTreeItems.values()) {
+				if (item.equals(CheckboxPageTreeItems.WORD)) {
+					assertTrue(checkBoxPage.isCheckBoxChecked(page, item));
+					assertTrue(results.contains(item.getLabel()));
+				} else {
+					assertFalse(checkBoxPage.isCheckBoxChecked(page, item));
+					assertFalse(results.contains(item.getLabel()));
+				}
+			}
 		});
 	}
 }
