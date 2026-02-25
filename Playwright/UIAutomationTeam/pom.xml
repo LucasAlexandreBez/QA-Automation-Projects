@@ -94,6 +94,14 @@
 			<version>1.57.0</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- Hikari for DB connection -->
+		<dependency>
+		   <groupId>com.zaxxer</groupId>
+		   <artifactId>HikariCP</artifactId>
+		   <version>7.0.2</version>
+		   <scope>test</scope>
+		</dependency>
 
 		<!-- JUnit Jupiter (API + Engine) -->
 		<dependency>

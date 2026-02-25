@@ -1,4 +1,4 @@
-package SRM_2026.jan.regresion.elements;
+package SRM.releases2026.jan.demoqa_regression.elements;
 
 import java.util.List;
 
@@ -78,20 +78,17 @@ public class CheckBoxTest extends DemoQATestBase {
 		});
 	}
 
-	/**
-	 * Given a user access the Checkbox page <br>
-	 * When user Check the Documents Folder option <br>
-	 * And user uncheck Office Folder option <br>
-	 * Then result area should present only Workspace, React, Angular and Veu text
-	 * values
-	 */
 	@Story("Check Box flow")
 	@Owner("Lucas Alexandre")
 	@Severity(SeverityLevel.NORMAL)
 	@Tag("Regression")
 	@Tag("Elements")
 	@DisplayName("Verify If user check Documents folder and uncheck Office folder then only subfolders and files inside Documens will be checked automatically")
-	@Description(useJavaDoc = true)
+	@Description("Given a user access the Checkbox page \r\n"
+			+ "When user Check the Documents Folder option \r\n"
+			+ "And user uncheck Office Folder option \r\n"
+			+ "Then result area should present only Workspace, React, Angular and Veu text values"
+	)
 	@Test
 	public void checkDocumentsAndUncheckOfficeFolderWithSuccess() {
 		menuPage.accessCheckBoxPage(page);

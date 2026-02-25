@@ -1,4 +1,4 @@
-package SRM_2026.jan.regresion.elements;
+package SRM.releases2026.jan.demoqa_regression.elements;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;

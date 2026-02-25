@@ -14,6 +14,7 @@ import config.PropertiesConfigLoader;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.HarMode;
+import com.microsoft.playwright.options.WaitUntilState;
 
 import engine.PlaywrightThreadManager;
 import engine.TestBaseManager;
@@ -53,6 +54,10 @@ public class OrangeHRMTestBase extends TestBaseManager{
         Browser browser = PlaywrightThreadManager.getBrowserThreadIntance();
         context = browser.newContext(options);
         page = context.newPage();
-        page.navigate(PropertiesConfigLoader.getPropertyValue("app.demoqa.url"));
+        page.navigate(
+        		PropertiesConfigLoader.getPropertyValue("app.orangehrm.url"),
+        	    new Page.NavigateOptions()
+        	        .setWaitUntil(WaitUntilState.DOMCONTENTLOADED)
+        	);
     }
 }

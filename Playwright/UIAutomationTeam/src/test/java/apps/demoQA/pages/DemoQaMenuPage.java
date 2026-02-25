@@ -12,11 +12,11 @@ public class DemoQaMenuPage {
 
     // =============================== HELPERS ===============================
 
-    private void clickMenuItem(Page page, String text) {
+    public void clickMenuItem(Page page, String text) {
         page.getByText(text, new Page.GetByTextOptions().setExact(true)).click();
     }
 
-    private boolean isExpanded(Locator locator) {
+    public boolean isExpanded(Locator locator) {
         return locator.getAttribute("class").contains("show");
     }
 

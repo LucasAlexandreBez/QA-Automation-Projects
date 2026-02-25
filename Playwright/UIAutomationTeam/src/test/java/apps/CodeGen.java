@@ -16,7 +16,7 @@ public class CodeGen {
 			BrowserContext context = browser.newContext(new NewContextOptions().setViewportSize(1440, 900));
 			context.route("**/*", route -> route.resume());
 			Page page = context.newPage();
-			page.navigate("https://demoqa.com");
+			page.navigate("http://localhost:8080/web/index.php/auth/login");
 			page.pause();
 		}
 	}
